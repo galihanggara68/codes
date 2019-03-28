@@ -1,3 +1,4 @@
+// Dictionary Array
 class Program
     {
         static void Main(string[] args)
@@ -21,6 +22,40 @@ class Program
             orangs[2] = orang3;
 
             foreach(Dictionary<string, string> or in orangs) {
+                Console.WriteLine("{0} {1}", or["nama"], or["alamat"]);
+            }
+
+            Console.ReadKey();
+        }
+    }
+	
+	
+	// Dictionary List
+	class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Dictionary<string, string>> orangs = new List<Dictionary<string, string>>();
+
+            Dictionary<string, string> orang = new Dictionary<string, string>();
+            orang.Add("nama", "Dadang");
+            orang.Add("alamat", "Bandung");
+            orangs.Add(orang);
+
+            Dictionary<string, string> orang2 = new Dictionary<string, string>();
+            orang2.Add("nama", "Ujang");
+            orang2.Add("alamat", "Bandung");
+            orangs.Add(orang2);
+
+            Dictionary<string, string> orang3 = new Dictionary<string, string>();
+            orang3.Add("nama", "Pelacore");
+            orang3.Add("alamat", "Bandung");
+            orangs.Add(orang3);
+
+            orangs.Remove(orang3);
+
+            foreach(Dictionary<string, string> or in orangs)
+            {
                 Console.WriteLine("{0} {1}", or["nama"], or["alamat"]);
             }
 
