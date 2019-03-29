@@ -1,10 +1,30 @@
 class Alarm
     {
-        private string bentuk = "Bulat";
-        private string warna = "Putih";
-        private int[] dimensi = { 15, 10, 5 };
-        private string merk = "Casio";
-        private string baterai = "AA";
+        private string bentuk;
+        private string warna;
+        private int[] dimensi;
+        private string merk;
+        private string baterai;
+
+        public string Bentuk
+        {
+            get
+            {
+                return this.bentuk;
+            }
+            set
+            {
+                this.bentuk = value;
+            }
+        }
+        public string Warna {
+            get {
+                return this.warna;
+            }
+            set {
+                this.warna = value;
+            }
+        }
 
         public void MenunjukanWaktu()
         {
@@ -36,12 +56,25 @@ class Program
     {
         static void Main(string[] args)
         {
+			Alarm AlarmObj = new Alarm { Bentuk="Bulat", Warna="Merah" };
+            Console.WriteLine(AlarmObj.Warna);
+            Console.WriteLine(AlarmObj.Bentuk);
+			
             Alarm alarmObj = new Alarm();
             alarmObj.TampilkanSpek();
             alarmObj.MenunjukanWaktu();
             alarmObj.MengeluarkanSuara();
             alarmObj.MenggerakanJarum();
 
+			Alarm[] alarmArr = { new Alarm { Bentuk="", Warna="" }, new Alarm { Warna="", Bentuk="" } };
+            Alarm[] alarmArr2 = new Alarm[3];
+            Alarm alarm = new Alarm();
+            alarmArr2[0] = alarm;
+
+            List<Alarm> listAlarm = new List<Alarm>();
+            listAlarm.Add(alarm);
+            listAlarm.Add(new Alarm { Bentuk="", Warna="" });
+			
             Console.ReadKey();
         }
     }
