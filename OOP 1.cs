@@ -17,6 +17,8 @@ class Baterai {
 
     class Alarm
     {
+        public static int totalAlarm = 0;
+        public static string machineCode = "EAX00FF";
         private string bentuk;
         private string warna;
         private int[] dimensi;
@@ -59,6 +61,7 @@ class Baterai {
         }
 
         public Alarm() {
+            totalAlarm++;
             Console.WriteLine("Objek Alarm Dibuat");
             Console.WriteLine("Memasang Baterai");
             this.baterai = new Baterai { Kapsitas = 100 };
@@ -66,6 +69,20 @@ class Baterai {
             this.hidup = true;
             this.bentuk = "Kotak";
             Console.WriteLine("Alarm Siap Digunakan, dengan kapasitas baterai " + this.baterai.Kapsitas);
+            Console.WriteLine("Machine Code : " + machineCode);
+        }
+
+        public Alarm(Baterai baterai, bool hidupkan) {
+            totalAlarm++;
+            this.baterai = baterai;
+            Console.WriteLine("Baterai dimasukan, dengan kapasitas " + baterai.Kapsitas);
+            this.hidup = hidupkan;
+            Console.WriteLine("Alarm " + (hidupkan ? "dihidupkan" : "tidak dihidupkan" ));
+            Console.WriteLine("Machine Code : " + machineCode);
+        }
+
+        public static void Count() {
+            Console.WriteLine("Total Alarm : " + totalAlarm);
         }
 
         public string MenunjukanWaktu()
@@ -116,16 +133,26 @@ class Baterai {
         }
     }
 	
-// With Constructor
+// With Constructor and Static Member
 class Program
     {
         static void Main(string[] args)
         {
-            Alarm alarm = new Alarm();
+            Baterai baterai = new Baterai { Kapsitas = 75 };
+            Alarm alarm = new Alarm(baterai, false);
+            Alarm.Count();
+            Alarm alarm2 = new Alarm();
+            Alarm.Count();
+            Alarm.machineCode = "MOVFFF0X";
+            Alarm alarm3 = new Alarm();
+            Alarm.Count();
+            Alarm alarm4 = new Alarm();
+            Alarm.Count();
 
             Console.ReadKey();
         }
     }
+
 	
 class Program
     {
