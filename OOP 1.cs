@@ -1,10 +1,31 @@
-class Alarm
+class Baterai {
+        private int kapasitas;
+        private int[] dimensi;
+
+        public int Kapsitas
+        {
+            get
+            {
+                return this.kapasitas;
+            }
+            set
+            {
+                this.kapasitas = value;
+            }
+        }
+    }
+
+    class Alarm
     {
         private string bentuk;
         private string warna;
         private int[] dimensi;
         private string merk;
-        private string baterai;
+        private Baterai baterai;
+        private int jam = 12;
+        private int menit = 5;
+        private int detik = 30;
+        private bool hidup = false;
 
         public string Bentuk
         {
@@ -25,10 +46,53 @@ class Alarm
                 this.warna = value;
             }
         }
-
-        public void MenunjukanWaktu()
+        public Baterai Baterai
         {
-            Console.WriteLine(DateTime.Now);
+            get
+            {
+                return this.baterai;
+            }
+            set
+            {
+                this.baterai = value;
+            }
+        }
+
+        public Alarm() {
+            Console.WriteLine("Objek Alarm Dibuat");
+            Console.WriteLine("Memasang Baterai");
+            this.baterai = new Baterai { Kapsitas = 100 };
+            Console.WriteLine("Menyalakan Alarm . . .");
+            this.hidup = true;
+            this.bentuk = "Kotak";
+            Console.WriteLine("Alarm Siap Digunakan, dengan kapasitas baterai " + this.baterai.Kapsitas);
+        }
+
+        public string MenunjukanWaktu()
+        {
+            return DateTime.Now.ToString();
+        }
+
+        public int AmbilWaktu(string waktu) {
+            switch(waktu)
+            {
+                case "jam":
+                    return this.jam;
+                    break;
+                case "menit":
+                    return this.menit;
+                    break;
+                case "detik":
+                    return this.detik;
+                    break;
+                default:
+                    return -1;
+                    break;
+            }
+        }
+
+        public bool GetKondisiAlarm() {
+            return this.hidup;
         }
 
         public void MengeluarkanSuara()
@@ -49,6 +113,17 @@ class Alarm
             Console.WriteLine("Merk : {0}", this.merk);
             Console.WriteLine("Warna : {0}", this.warna);
             Console.WriteLine("Baterai : {0}", this.baterai);
+        }
+    }
+	
+// With Constructor
+class Program
+    {
+        static void Main(string[] args)
+        {
+            Alarm alarm = new Alarm();
+
+            Console.ReadKey();
         }
     }
 	
