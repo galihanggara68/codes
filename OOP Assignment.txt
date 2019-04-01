@@ -1,4 +1,39 @@
-Assignment  :
+Assignment (Subject : Calculator[name]) :
+Create a calculator program with specification below :
+- Calculator can calculate (Add, Substract, Multiply, Divide, Mod)
+- Min. 1 Class
+- Use 3 or more data types
+- Use Application Arguments for input(ex. calcullator.exe 5 + 4)
+- Handle all possible errors with try catch
+
+Assignment (Subject : Shape Calculator[name]) :
+Create a 2D&3D shape calculator program with specification below :
+- Min 3 2D shapes
+- Min 1 3D Shape
+- Min. 1 Class
+- Use 3 or more data types
+- Use Application Arguments for input(ex. calcullator.exe circle 8)
+- Handle all possible errors with try catch
+
+Assignment Final C# Fundamental (Subject : Alphabet Workout[name]) :
+Create a program called Alphabet Workout -> Search on google
+Requirements :
+- Min. 1 Class
+- Min. 3 data types
+- Min. 1 Collection
+- Exception Handling
+- All functions work properly
+
+Assignment (Subject : Media Player[name]) :
+ - Create a Media Player class and Music class
+ - The Media Player class can do tasks as follows :
+  = Play a music
+  = Create, Show, Delete, Update Playlist
+  = Next & Prev Song
+ - Try to implement exception handler on this Exercise
+
+
+Assignment Final C# OOP (Subject : Simple RPG Logic[name]) :
  - Create a simple RPG game logic
  - The game rule is as follows:
  
