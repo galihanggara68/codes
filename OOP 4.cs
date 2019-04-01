@@ -2,11 +2,43 @@ interface IGun {
         void Shoot();
         void Reload();
         void FiringMode();
+        void Scope();
+    }
+
+    interface IScope
+    {
+        void Zoom();
+    }
+
+    class DotSight : IScope {
+        public void Zoom()
+        {
+            Console.WriteLine("Dot Sight Zooming");
+        }
+    }
+
+    class HolographicSight : IScope {
+        public void Zoom()
+        {
+            Console.WriteLine("Holographic Sight Zooming");
+        }
     }
 
     class Rifle : IGun {
         private int ammo;
         private bool autoMode = false;
+        private IScope sight;
+
+        public IScope Sight {
+            set
+            {
+                this.sight = value;
+            }
+            get
+            {
+                return this.sight;
+            }
+        }
 
         public int Ammo
         {
@@ -18,6 +50,10 @@ interface IGun {
             {
                 this.ammo = value;
             }
+        }
+
+        public void Scope() {
+            this.sight.Zoom();
         }
 
         public void Shoot()
@@ -63,6 +99,11 @@ interface IGun {
             }
         }
 
+        public void Scope()
+        {
+            //
+        }
+
         public void Shoot()
         {
             Console.WriteLine("Pistol Shooting . . .");
@@ -93,17 +134,10 @@ interface IGun {
     {
         static void Main(string[] args)
         {
-            Pistol pistol = new Pistol();
-            Rifle rifle = new Rifle();
-
             IGun playerGun;
-            playerGun = pistol; // Player mengambil Pistol
-            playerGun.Reload();
-            playerGun.Shoot(); // Shoot();
-            Console.WriteLine("Ammo Left : {0}", pistol.Ammo);
-            playerGun.FiringMode();
-            playerGun.Shoot(); // Shoot();
-            Console.WriteLine("Ammo Left : {0}", pistol.Ammo);
+            Rifle rifle = new Rifle();
+            HolographicSight sight = new HolographicSight();
+            DotSight dotSight = new DotSight();
 
             playerGun = rifle;  // Player mengambil Rifle
             playerGun.Reload();
@@ -112,6 +146,12 @@ interface IGun {
             playerGun.FiringMode();
             playerGun.Shoot(); // Shoot();
             Console.WriteLine("Ammo Left : {0}", rifle.Ammo);
+
+            rifle.Sight = sight;
+            playerGun.Scope();
+            rifle.Sight = dotSight;
+            playerGun.Scope();
+            playerGun.Shoot();
 
             Console.ReadKey();
         }
