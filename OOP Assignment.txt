@@ -1,0 +1,24 @@
+Assignment  :
+ - Create a simple RPG game logic
+ - The game rule is as follows:
+ 
+ =Attack=
+ Action | Mana| Energy
+ -----------------------------
+ Regular | - | 20
+ Mage  | 20 | -
+ 
+ =Hit=
+ Hit  | Damage
+ ---------------------
+ Regular | 20-35
+ Mage | 20-35
+ 
+ =Weapons&Magic=
+ Regular : Fist, Axe, Sword
+ Mage : Magic Wand, Hand Lighting, Magic Sword
+ 
+ - The player and the enemy are turn alternately
+ - The damage for each hit are set randomly
+ - Player can choose between Regular and Mage character
+ - Player can choose any weapon or magic that will used in gameplay
