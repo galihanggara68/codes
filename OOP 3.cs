@@ -35,7 +35,7 @@ class Person {
             }
         }
 
-        public void Eat() {
+        public virtual void Eat() {
             Console.WriteLine("I am eating");
         }
 
@@ -63,6 +63,10 @@ class Person {
         {
             Console.WriteLine("I am working");
         }
+
+        public override void Eat() {
+            Console.WriteLine("Employee Eat");
+        }
     }
 
     class Student : Person
@@ -86,7 +90,7 @@ class Person {
             Console.WriteLine("I am studying");
         }
     }
-
+	
     class Program
     {
         static void Main(string[] args)
