@@ -92,6 +92,20 @@
 
             connection.Close();
         }
+		
+		public void InsertEmployee(Dictionary<string, string> employee) {
+            connection.Open();
+
+            SqlCommand command = new SqlCommand("insert into hr.hr.copy_emp(employee_id, first_name, last_name, email) values(@empId, @firstName, @lastName, @email)", connection);
+            command.Parameters.AddWithValue("@empId", employee["employee_id"]);
+            command.Parameters.AddWithValue("@firstName", employee["first_name"]);
+            command.Parameters.AddWithValue("@lastName", employee["last_name"]);
+            command.Parameters.AddWithValue("@email", employee["email"]);
+            command.ExecuteNonQuery();
+            Console.WriteLine("Insert success with employee_id {0}", employee["employee_id"]);
+
+            connection.Close();
+        }
 
         public void Delete(int employeeId)
         {
@@ -160,6 +174,20 @@
 			// Select Single Employee
 			Dictionary<string, string> employee = crud.SelectEmployees(222);
             Console.WriteLine("{0} {1} {2}", employee["employee_id"], employee["first_name"], employee["last_name"]);
+			
+			// Insert Employee Using Dictionary
+			Dictionary<string, string> employee = new Dictionary<string, string>();
+
+            employee.Add("employee_id", "456");
+            employee.Add("first_name", "Galih");
+            employee.Add("last_name", "Anggara");
+            employee.Add("email", "galih@mail.com");
+
+            crud.InsertEmployee(employee);
+
+            Dictionary<string, string> employee2 = crud.SelectEmployees(456);
+
+            Console.WriteLine("{0} {1}", employee2["employee_id"], employee2["first_name"], employee2["last_name"]);
 			
             Console.ReadKey();
         }
