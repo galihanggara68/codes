@@ -59,24 +59,30 @@
             return employees;
         }
 
-        public Dictionary<string, string> SelectEmployees(int employeeId) {
-            Dictionary<string, string> employee = null;
-            connection.Open();
-
-            SqlCommand command = new SqlCommand("select * from hr.hr.copy_emp where employee_id = @empId", connection);
-            command.Parameters.AddWithValue("@empId", employeeId);
+        public List<Employee> SelectEmployees() {
+            List<Employee> employees = new List<Employee>();
+            try
+            {
+                connection.Open();
+            }
+            catch(SqlException sqle) {
+                Console.WriteLine("Connection error");
+            }
+            SqlCommand command = new SqlCommand("select * from hr.hr.copy_emp", connection);
             SqlDataReader reader = command.ExecuteReader();
             while(reader.Read())
             {
-                employee = new Dictionary<string, string>();
-                employee.Add("employee_id", reader["employee_id"].ToString());
-                employee.Add("first_name", reader["first_name"].ToString());
-                employee.Add("last_name", reader["last_name"].ToString());
-                employee.Add("email", reader["email"].ToString());
+                Employee employee = new Employee();
+                employee.EmployeeId = int.Parse(reader["employee_id"].ToString());
+                employee.FirstName = reader["first_name"].ToString();
+                employee.LastName = reader["last_name"].ToString();
+                employee.Email = reader["email"].ToString();
+
+                employees.Add(employee);
             }
 
             connection.Close();
-            return employee;
+            return employees;
         }
 
         public void InsertEmployee(int employeeId, string firstName, string lastName, string email) {
@@ -165,29 +171,21 @@
             crud.SelectEmployees(1234);
             crud.Delete(1234);
 			
-			// Employees with Dictionary
-            List<Dictionary<string, string>> employees = crud.SelectEmployees();
-            foreach(Dictionary<string, string> employee in employees)
-            {
-                Console.WriteLine("Emp ID : {0}, Name : {1} {2}", employee["employee_id"], employee["first_name"], employee["last_name"]);
+			// Employees with POCO
+            List<Employee> employees = crud.SelectEmployees();
+            foreach(Employee employee in employees) {
+                Console.WriteLine("{0} {1} {2}", employee.EmployeeId, employee.FirstName, employee.LastName);
             }
 			// Select Single Employee
 			Dictionary<string, string> employee = crud.SelectEmployees(222);
             Console.WriteLine("{0} {1} {2}", employee["employee_id"], employee["first_name"], employee["last_name"]);
 			
-			// Insert Employee Using Dictionary
-			Dictionary<string, string> employee = new Dictionary<string, string>();
-
-            employee.Add("employee_id", "456");
-            employee.Add("first_name", "Galih");
-            employee.Add("last_name", "Anggara");
-            employee.Add("email", "galih@mail.com");
-
-            crud.InsertEmployee(employee);
-
+			// Insert Employee Using Dictionar
             Dictionary<string, string> employee2 = crud.SelectEmployees(456);
 
             Console.WriteLine("{0} {1}", employee2["employee_id"], employee2["first_name"], employee2["last_name"]);
+			
+			
 			
             Console.ReadKey();
         }
