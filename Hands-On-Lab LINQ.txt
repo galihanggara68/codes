@@ -1,0 +1,20 @@
+Exercise 1 :
+	- Create CRUD function using LINQ
+	
+Exercise 2 :
+	- Refer to Exercise 1, use model to implement LINQ
+	
+Exercise 3 :
+	- Try to implement LINQ using Database
+	
+Assignment :
+	- Create a simple cashier system
+	- The system can do tasks below :
+		= Show items in cart
+		= Add item to cart
+		= Delete item from cart
+		= Update item quantity
+		= Checkout transaction
+		= Show last 3 transaction histories
+	- Use LINQ to create the system
+	- Handle all possible errors using try catch
