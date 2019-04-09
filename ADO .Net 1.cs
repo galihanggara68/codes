@@ -89,32 +89,6 @@
             connection = db.Connection;
         }
 
-        public List<Dictionary<string, string>> SelectEmployees() {
-            List<Dictionary<string, string>> employees = new List<Dictionary<string, string>>();
-            try
-            {
-                connection.Open();
-            }
-            catch(SqlException sqle) {
-                Console.WriteLine("Connection error");
-            }
-            SqlCommand command = new SqlCommand("select * from hr.hr.copy_emp", connection);
-            SqlDataReader reader = command.ExecuteReader();
-            while(reader.Read())
-            {
-                Dictionary<string, string> employee = new Dictionary<string, string>();
-                employee.Add("employee_id", reader["employee_id"].ToString());
-                employee.Add("first_name", reader["first_name"].ToString());
-                employee.Add("last_name", reader["last_name"].ToString());
-                employee.Add("email", reader["email"].ToString());
-
-                employees.Add(employee);
-            }
-
-            connection.Close();
-            return employees;
-        }
-
         public List<Employee> SelectEmployees() {
             List<Employee> employees = new List<Employee>();
             try
@@ -141,30 +115,36 @@
             return employees;
         }
 
-        public void InsertEmployee(int employeeId, string firstName, string lastName, string email) {
+        public Employee SelectEmployees(int employeeId) {
+            Employee employee = null;
             connection.Open();
 
-            SqlCommand command = new SqlCommand("insert into hr.hr.copy_emp(employee_id, first_name, last_name, email) values(@empId, @firstName, @lastName, @email)", connection);
+            SqlCommand command = new SqlCommand("select * from hr.hr.copy_emp where employee_id = @empId", connection);
             command.Parameters.AddWithValue("@empId", employeeId);
-            command.Parameters.AddWithValue("@firstName", firstName);
-            command.Parameters.AddWithValue("@lastName", lastName);
-            command.Parameters.AddWithValue("@email", email);
-            command.ExecuteNonQuery();
-            Console.WriteLine("Insert success with employee_id {0}", employeeId);
+            SqlDataReader reader = command.ExecuteReader();
+            while(reader.Read())
+            {
+                employee = new Employee();
+                employee.EmployeeId = int.Parse(reader["employee_id"].ToString());
+                employee.FirstName = reader["first_name"].ToString();
+                employee.LastName = reader["last_name"].ToString();
+                employee.Email = reader["email"].ToString();
+            }
 
             connection.Close();
+            return employee;
         }
-		
-		public void InsertEmployee(Dictionary<string, string> employee) {
+
+        public void InsertEmployee(Employee employee) {
             connection.Open();
 
             SqlCommand command = new SqlCommand("insert into hr.hr.copy_emp(employee_id, first_name, last_name, email) values(@empId, @firstName, @lastName, @email)", connection);
-            command.Parameters.AddWithValue("@empId", employee["employee_id"]);
-            command.Parameters.AddWithValue("@firstName", employee["first_name"]);
-            command.Parameters.AddWithValue("@lastName", employee["last_name"]);
-            command.Parameters.AddWithValue("@email", employee["email"]);
+            command.Parameters.AddWithValue("@empId", employee.EmployeeId);
+            command.Parameters.AddWithValue("@firstName", employee.FirstName);
+            command.Parameters.AddWithValue("@lastName", employee.LastName);
+            command.Parameters.AddWithValue("@email", employee.Email);
             command.ExecuteNonQuery();
-            Console.WriteLine("Insert success with employee_id {0}", employee["employee_id"]);
+            Console.WriteLine("Insert success with employee_id {0}", employee.EmployeeId);
 
             connection.Close();
         }
@@ -242,6 +222,10 @@
             Console.WriteLine("{0} {1}", employee2["employee_id"], employee2["first_name"], employee2["last_name"]);
 			
 			
+			// With Model
+			EmployeeCRUD crud = new EmployeeCRUD();
+            Employee employee = crud.SelectEmployees(456);
+            Console.WriteLine("{0} {1}", employee.FirstName, employee.LastName);
 			
             Console.ReadKey();
         }
