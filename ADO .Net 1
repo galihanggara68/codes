@@ -1,0 +1,43 @@
+class DB
+    {
+        private SqlConnection connection;
+
+        public SqlConnection Connection
+        {
+            get
+            {
+                return this.connection;
+            }
+        }
+
+        public DB()
+        {
+            try
+            {
+                SqlConnection sqlConn = new SqlConnection(@"Server=.\SQLEXPRESS;Database=HR;Trusted_Connection=True;");
+                this.connection = sqlConn;
+            }catch(SqlException sqle)
+            {
+                Console.WriteLine("Connection Error");
+            }
+        }
+    }
+	
+class Program
+    {
+        static void Main(string[] args)
+        {
+            DB db = new DB();
+            SqlConnection connection = db.Connection;
+            connection.Open();
+            SqlCommand command = new SqlCommand("select * from hr.employees", connection);
+            SqlDataReader reader = command.ExecuteReader();
+            while(reader.Read())
+            {
+                Console.WriteLine("First : {0} Last {1}", reader["first_name"], reader["last_name"]);
+            }
+
+            Console.ReadKey();
+        }
+    }
+    }
