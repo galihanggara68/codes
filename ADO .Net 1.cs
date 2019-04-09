@@ -59,7 +59,8 @@
             return employees;
         }
 
-        public void SelectEmployees(int employeeId) {
+        public Dictionary<string, string> SelectEmployees(int employeeId) {
+            Dictionary<string, string> employee = null;
             connection.Open();
 
             SqlCommand command = new SqlCommand("select * from hr.hr.copy_emp where employee_id = @empId", connection);
@@ -67,10 +68,15 @@
             SqlDataReader reader = command.ExecuteReader();
             while(reader.Read())
             {
-                Console.WriteLine("First Name : {0} - Last Name : {1} - Email : {2}", reader["first_name"], reader["last_name"], reader["email"]);
+                employee = new Dictionary<string, string>();
+                employee.Add("employee_id", reader["employee_id"].ToString());
+                employee.Add("first_name", reader["first_name"].ToString());
+                employee.Add("last_name", reader["last_name"].ToString());
+                employee.Add("email", reader["email"].ToString());
             }
 
             connection.Close();
+            return employee;
         }
 
         public void InsertEmployee(int employeeId, string firstName, string lastName, string email) {
@@ -144,12 +150,17 @@
             crud.UpdateEmployee(1234, "Test Test", "Test 1", "test@mail.com");
             crud.SelectEmployees(1234);
             crud.Delete(1234);
+			
+			// Employees with Dictionary
             List<Dictionary<string, string>> employees = crud.SelectEmployees();
             foreach(Dictionary<string, string> employee in employees)
             {
                 Console.WriteLine("Emp ID : {0}, Name : {1} {2}", employee["employee_id"], employee["first_name"], employee["last_name"]);
             }
-
+			// Select Single Employee
+			Dictionary<string, string> employee = crud.SelectEmployees(222);
+            Console.WriteLine("{0} {1} {2}", employee["employee_id"], employee["first_name"], employee["last_name"]);
+			
             Console.ReadKey();
         }
     }
