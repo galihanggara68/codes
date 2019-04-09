@@ -1,4 +1,4 @@
-class DB
+	class DB
     {
         private SqlConnection connection;
 
@@ -23,21 +23,37 @@ class DB
         }
     }
 	
-class Program
+	class EmployeeCRUD
     {
-        static void Main(string[] args)
+        private SqlConnection connection;
+
+        public EmployeeCRUD()
         {
             DB db = new DB();
-            SqlConnection connection = db.Connection;
+            connection = db.Connection;
+        }
+
+        public void SelectEmployees() {
             connection.Open();
-            SqlCommand command = new SqlCommand("select * from hr.employees", connection);
+
+            SqlCommand command = new SqlCommand("select * from hr.copy_emp", connection);
             SqlDataReader reader = command.ExecuteReader();
             while(reader.Read())
             {
-                Console.WriteLine("First : {0} Last {1}", reader["first_name"], reader["last_name"]);
+                Console.WriteLine("First Name : {0} - Last Name : {1}", reader["first_name"], reader["last_name"]);
             }
+
+            connection.Close();
+        }
+    }
+	
+	class Program
+    {
+        static void Main(string[] args)
+        {
+            EmployeeCRUD crud = new EmployeeCRUD();
+            crud.SelectEmployees();
 
             Console.ReadKey();
         }
-    }
     }
