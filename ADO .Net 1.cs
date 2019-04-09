@@ -23,6 +23,62 @@
         }
     }
 	
+	// POCO
+    class Employee
+    {
+        private int employeeId;
+        private string firstName;
+        private string lastName;
+        private string email;
+
+        public int EmployeeId {
+            get
+            {
+                return this.employeeId;
+            }
+            set
+            {
+                this.employeeId = value;
+            }
+        }
+
+        public string FirstName
+        {
+            get
+            {
+                return this.firstName;
+            }
+            set
+            {
+                this.firstName = value;
+            }
+        }
+
+        public string LastName
+        {
+            get
+            {
+                return this.lastName;
+            }
+            set
+            {
+                this.lastName = value;
+            }
+        }
+
+        public string Email
+        {
+            get
+            {
+                return this.email;
+            }
+            set
+            {
+                this.email = value;
+            }
+        }
+    }
+	
 	class EmployeeCRUD
     {
         private SqlConnection connection;
