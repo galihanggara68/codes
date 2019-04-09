@@ -33,17 +33,30 @@
             connection = db.Connection;
         }
 
-        public void SelectEmployees() {
-            connection.Open();
-
+        public List<Dictionary<string, string>> SelectEmployees() {
+            List<Dictionary<string, string>> employees = new List<Dictionary<string, string>>();
+            try
+            {
+                connection.Open();
+            }
+            catch(SqlException sqle) {
+                Console.WriteLine("Connection error");
+            }
             SqlCommand command = new SqlCommand("select * from hr.hr.copy_emp", connection);
             SqlDataReader reader = command.ExecuteReader();
             while(reader.Read())
             {
-                Console.WriteLine("First Name : {0} - Last Name : {1} - Email : {2}", reader["first_name"], reader["last_name"], reader["email"]);
+                Dictionary<string, string> employee = new Dictionary<string, string>();
+                employee.Add("employee_id", reader["employee_id"].ToString());
+                employee.Add("first_name", reader["first_name"].ToString());
+                employee.Add("last_name", reader["last_name"].ToString());
+                employee.Add("email", reader["email"].ToString());
+
+                employees.Add(employee);
             }
 
             connection.Close();
+            return employees;
         }
 
         public void SelectEmployees(int employeeId) {
@@ -95,8 +108,13 @@
             command.Parameters.AddWithValue("@firstName", firstName);
             command.Parameters.AddWithValue("@lastName", lastName);
             command.Parameters.AddWithValue("@email", email);
-            command.ExecuteNonQuery();
-            Console.WriteLine("Update success with employee_id {0}", employeeId);
+            if(command.ExecuteNonQuery() < 1)
+            {
+                Console.WriteLine("Data tidak ditemukan");
+            }
+            else {
+                Console.WriteLine("Update success with employee_id {0}", employeeId);
+            }
 
             connection.Close();
         }
@@ -126,7 +144,11 @@
             crud.UpdateEmployee(1234, "Test Test", "Test 1", "test@mail.com");
             crud.SelectEmployees(1234);
             crud.Delete(1234);
-            crud.SelectEmployees();
+            List<Dictionary<string, string>> employees = crud.SelectEmployees();
+            foreach(Dictionary<string, string> employee in employees)
+            {
+                Console.WriteLine("Emp ID : {0}, Name : {1} {2}", employee["employee_id"], employee["first_name"], employee["last_name"]);
+            }
 
             Console.ReadKey();
         }
