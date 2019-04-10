@@ -9,7 +9,7 @@
 	<p>Teks 3</p>
 	<p>Teks 4</p>
 	
-	<span id="paragraph">Teks 1</span>
+	<span id="paragraph"><p>Teks 1</p></span>
 	
 	<div class="content">
 		<h3>Head 1</h3>
@@ -31,5 +31,9 @@
 	let input = document.getElementById("ipt");
 	console.log([input]);
 	let iptVal = input.value;
+	
+	let pr = document.getElementById("paragraph");
+	console.log(pr.innerText);
+	console.log(pr.innerHTML);
 </script>
 </html>
