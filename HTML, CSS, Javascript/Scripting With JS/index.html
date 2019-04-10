@@ -1,0 +1,35 @@
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>JS</title>
+</head>
+<body>
+	<p>Teks 1</p>
+	<p>Teks 2</p>
+	<p>Teks 3</p>
+	<p>Teks 4</p>
+	
+	<span id="paragraph">Teks 1</span>
+	
+	<div class="content">
+		<h3>Head 1</h3>
+		<h3>Head 2</h3>
+		<h3>Head 3</h3>
+	</div>
+	
+	<input id="ipt" type="text" value="Test"/>
+	<input type="text" />
+	
+	<input type="checkbox" />
+</body>
+<script type="text/javascript">
+	let span = document.getElementById("paragraph");
+	let content = document.querySelectorAll(".content h3");
+	console.log(content);
+	content[1].style.color = "blue";
+	
+	let input = document.getElementById("ipt");
+	console.log([input]);
+	let iptVal = input.value;
+</script>
+</html>
