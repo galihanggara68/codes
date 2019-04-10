@@ -22,8 +22,9 @@
 	
 	<input type="checkbox" />
 	
-	<input type="text" id="num1" value="2"/>
+	<input type="text" id="num1" value="-6"/>
 	<input type="text" id="num2" value="4"/>
+	<h1 id="result"></h1>
 </body>
 <script type="text/javascript">
 	let span = document.getElementById("paragraph");
@@ -43,6 +44,12 @@
 	let number2 = parseInt(document.getElementById("num2").value);
 	
 	let sum = number1 + number2;
-	document.write(sum);
+	let res = document.getElementById("result");
+	res.innerText = sum;
+	if(sum < 0){
+		res.style.color = "red";
+	}else{
+		res.style.color = "green";
+	}
 </script>
 </html>
