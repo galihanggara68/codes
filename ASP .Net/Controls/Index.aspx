@@ -1,5 +1,4 @@
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="ASPWebForm.Index" %>
-
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -9,7 +8,7 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <asp:Label Text="Test Label" ID="labelTest" runat="server" AssociatedControlID="textBoxTest"/>
+            <%--<asp:Label Text="Test Label" ID="labelTest" runat="server" AssociatedControlID="textBoxTest"/>
             <asp:Literal Text="Test Literal" ID="literalTest" runat="server"/>
 
             <asp:TextBox ID="textBoxTest" Text="Initial Text" runat="server"/>
@@ -34,7 +33,23 @@
 
             <%= radioGender.SelectedValue %>
 
-            <asp:HyperLink ID="testHyperlink" Text="Google" NavigateUrl="http://www.google.com" runat="server" />
+            <asp:HyperLink ID="testHyperlink" Text="Google" NavigateUrl="google.com" runat="server" />
+
+            <asp:TextBox ID="number1" runat="server" />
+            <asp:DropDownList ID="dropDownOperator" runat="server">
+            </asp:DropDownList>
+            <asp:RadioButtonList ID="radioButtons" runat="server"></asp:RadioButtonList>
+            <asp:TextBox ID="number2" runat="server" />
+            <asp:Label ID="result" runat="server" />
+            <asp:Button ID="hitung" Text="Hitung" runat="server" OnClick="hitung_Click" />--%>
+
+               <asp:Table ID="table" runat="server">
+                    <asp:TableHeaderRow>
+                        <asp:TableHeaderCell Text="No" />
+                        <asp:TableHeaderCell Text="Nama" />
+                        <asp:TableHeaderCell Text="Alamat" />
+                    </asp:TableHeaderRow>
+               </asp:Table>
         </div>
     </form>
 </body>
