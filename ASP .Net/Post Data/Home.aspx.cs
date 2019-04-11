@@ -12,9 +12,13 @@ namespace ASPWebForm
         protected void Page_Load(object sender, EventArgs e)
         {
             string nama = Request.Form["nama"];
+            string alamat = Request.Form["alamat"];
             if("Galih".Equals(nama))
+            {
                 Response.Redirect("~/Index.aspx");
+            }
             Response.Write(nama);
+            Response.Write(alamat);
         }
     }
 }

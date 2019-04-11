@@ -9,6 +9,7 @@
     <form id="form1" action="Home.aspx" method="post" runat="server">
         <div>
             <asp:TextBox ID="nama" runat="server" />
+            <asp:TextBox ID="alamat" runat="server" />
             <asp:Button ID="btn" runat="server" Text="Kirim" />
         </div>
     </form>
