@@ -1,0 +1,16 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="ASPWebForm.Index" %>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Forms</title>
+</head>
+<body>
+    <form id="form1" action="Home.aspx" method="post" runat="server">
+        <div>
+            <asp:TextBox ID="nama" runat="server" />
+            <asp:Button ID="btn" runat="server" Text="Kirim" />
+        </div>
+    </form>
+</body>
+</html>
