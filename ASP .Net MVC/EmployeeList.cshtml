@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-
+@{
+    List<string> names = (List<string>)ViewBag.listEmployee;
+ }
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -8,8 +10,9 @@
 </head>
 <body>
     <div>
-        @{
-            Response.Write(ViewBag.listEmployee);
+        @foreach(string name in names)
+        {
+            <h3>@name</h3>
         }
     </div>
 </body>
