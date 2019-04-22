@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-@{
-    List<string> names = (List<string>)ViewBag.listEmployee;
- }
+@{ 
+    List<string> names = (List<string>)TempData.Peek("names");
+}
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -10,9 +10,12 @@
 </head>
 <body>
     <div>
-        @foreach(string name in names)
+        @for(int i = 0; i < names.Count; i++)
         {
-            <h3>@name</h3>
+            <h3>@names[i]</h3>
+            <form action="/employees/@i/delete" method="post">
+                <input type="submit" value="Delete" />
+            </form>
         }
     </div>
 </body>

@@ -12,15 +12,20 @@ namespace WebMVC.Controllers
         [Route("")]
         [HttpGet]
         public ActionResult ListEmployee() {
-            ViewBag.listEmployee = "List employee";
+            if(TempData.Peek("names") == null) {
+                List<string> names = new List<string> { "Ucup", "Udin", "Ujang" };
+                TempData["names"] = names;
+            }
             return View("Index");
         }
 
         [Route("")]
         [HttpPost]
-        public ActionResult AddEmployee()
+        public ActionResult AddEmployee(string name)
         {
-            return Redirect("employees");
+            List<string> names = (List<string>)TempData.Peek("names");
+            names.Add(name);
+            return Redirect("~/employees");
         }
 
         [Route("new")]
@@ -33,27 +38,34 @@ namespace WebMVC.Controllers
         [Route("{id}")]
         [HttpGet]
         public ActionResult GetEmployee(int id) {
-            ViewBag.employee = id;
+            List<string> names = (List<string>)TempData.Peek("names");
+            ViewBag.name = names[id];
             return View("Employee");
         }
 
         [Route("{id}/edit")]
         [HttpGet]
         public ActionResult EditEmployee(int id) {
-            ViewBag.employee = id;
+            List<string> names = (List<string>)TempData.Peek("names");
+            ViewBag.id = id;
+            ViewBag.name = names[id];
             return View("EmployeeForm");
         }
 
         [Route("{id}/edit")]
-        [HttpPut]
-        public ActionResult UpdateEmployee(int id) {
-            return Redirect("employees");
+        [HttpPost]
+        public ActionResult UpdateEmployee(int id, string name) {
+            List<string> names = (List<string>)TempData.Peek("names");
+            names[id] = name;
+            return Redirect("~/employees");
         }
 
         [Route("{id}/delete")]
-        [HttpDelete]
+        [HttpPost]
         public ActionResult DeleteEmployee(int id) {
-            return Redirect("employees");
+            List<string> names = (List<string>)TempData.Peek("names");
+            names.RemoveAt(id);
+            return Redirect("~/employees");
         }
     }
 }
