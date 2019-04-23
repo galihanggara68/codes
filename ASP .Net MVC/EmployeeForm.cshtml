@@ -1,14 +1,4 @@
 <!DOCTYPE html>
-@{ 
-    string formAction;
-    if(ViewBag.id != null) {
-        formAction = "/employees/" + ViewBag.id + "/edit";
-    }
-    else
-    {
-        formAction = "/employees";
-    }
-}
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -16,8 +6,10 @@
 </head>
 <body>
     <div> 
-        <form action="@formAction" method="post">
-            <input type="text" name="name" value="@ViewBag.name" />
+        <form action="/employees" method="post">
+            <input type="text" name="EmployeeId" />
+            <input type="text" name="FirstName" />
+            <input type="text" name="LastName" />
             <input type="submit" name="tambah" value="Tambah" />
         </form>
     </div>
