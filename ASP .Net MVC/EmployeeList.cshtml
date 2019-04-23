@@ -1,6 +1,7 @@
+@using WebMVC.Models;
 <!DOCTYPE html>
 @{ 
-    List<string> names = (List<string>)TempData.Peek("names");
+    List<Employee> employees = (List<Employee>)TempData.Peek("employees");
 }
 <html>
 <head>
@@ -10,10 +11,10 @@
 </head>
 <body>
     <div>
-        @for(int i = 0; i < names.Count; i++)
+        @foreach(Employee employee in employees)
         {
-            <h3>@names[i]</h3>
-            <form action="/employees/@i/delete" method="post">
+            <h3>@employee.FirstName @employee.LastName</h3>
+            <form action="/employees/@employee.EmployeeId/delete" method="post">
                 <input type="submit" value="Delete" />
             </form>
         }
