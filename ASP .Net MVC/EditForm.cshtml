@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+@{ 
+    var employee = ViewBag.employee;
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EmployeeForm</title>
+</head>
+<body>
+    <div>
+        <form action="/employees/edit" method="post">
+            <input type="text" name="EmployeeId" value="@employee.EmployeeId"/>
+            <input type="text" name="FirstName" value="@employee.FirstName" />
+            <input type="text" name="LastName" value="@employee.LastName" />
+            <input type="submit" name="tambah" value="Update" />
+        </form>
+    </div>
+</body>
+</html>
