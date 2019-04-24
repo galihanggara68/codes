@@ -1,10 +1,5 @@
-
-@{
-    Layout = null;
-}
-
 <!DOCTYPE html>
-
+@model WebMVC.Models.Employee
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -12,13 +7,10 @@
 </head>
 <body>
     <div>
-        @{ 
-            var employee = ViewBag.employee;
-        }
         Showing
-        <h3>@employee.EmployeeId</h3>
-        <h3>@employee.FirstName</h3>
-        <h3>@employee.LastName</h3>
+        <h3>@Model.EmployeeId</h3>
+        <h3>@Model.FirstName</h3>
+        <h3>@Html.DisplayFor(m => m.LastName)</h3>
     </div>
 </body>
 </html>
