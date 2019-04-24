@@ -1,17 +1,20 @@
 <!DOCTYPE html>
+@model WebMVC.Models.Employee
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>EmployeeForm</title>
 </head>
 <body>
-    <div> 
-        <form action="/employees" method="post">
-            <input type="text" name="EmployeeId" />
-            <input type="text" name="FirstName" />
-            <input type="text" name="LastName" />
-            <input type="submit" name="tambah" value="Tambah" />
-        </form>
+    <div>
+        @using(Html.BeginForm("NewEmployee", "Index", FormMethod.Post))
+         {
+            @Html.EditorFor(m => m.EmployeeId)
+            @Html.EditorFor(m => m.FirstName)
+            @Html.EditorFor(m => m.LastName)
+            @Html.Editor("EmployeeId")
+            <input type="submit" value="Tambah" />
+         }
     </div>
 </body>
 </html>
