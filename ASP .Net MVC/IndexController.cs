@@ -12,8 +12,10 @@ namespace WebMVC.Controllers
     {
         [Route("")]
         [HttpGet]
-        public ActionResult ListEmployee() {
-            if(TempData.Peek("employees") == null) {
+        public ActionResult ListEmployee()
+        {
+            if(TempData.Peek("employees") == null)
+            {
                 List<Employee> employees = new List<Employee> {
                     new Employee{ EmployeeId = 100, FirstName = "Udin", LastName = "Jalaludin" },
                     new Employee{ EmployeeId = 101, FirstName = "Ice", LastName = "Juice" },
@@ -22,11 +24,12 @@ namespace WebMVC.Controllers
 
                 TempData["employees"] = employees;
             }
-            return View("Index");
+            return View("Index", TempData.Peek("employees"));
         }
 
         [Route("")]
         [HttpPost]
+        [ActionName("NewEmployee")]
         public ActionResult AddEmployee(Employee employee)
         {
             List<Employee> employees = (List<Employee>)TempData.Peek("employees");
@@ -43,23 +46,26 @@ namespace WebMVC.Controllers
 
         [Route("{id}")]
         [HttpGet]
-        public ActionResult GetEmployee(int id) {
+        public ActionResult GetEmployee(int id)
+        {
             List<Employee> employees = (List<Employee>)TempData.Peek("employees");
-            ViewBag.employee = employees.Find(e => e.EmployeeId == id);
-            return View("Employee");
+            Employee employee = employees.Find(e => e.EmployeeId == id);
+            return View("Employee", employee);
         }
 
         [Route("{id}/edit")]
         [HttpGet]
-        public ActionResult EditEmployee(int id) {
+        public ActionResult EditEmployee(int id)
+        {
             List<Employee> employees = (List<Employee>)TempData.Peek("employees");
-            ViewBag.employee = employees.Find(e => e.EmployeeId == id);
-            return View("EditForm");
+            Employee employee = employees.Find(e => e.EmployeeId == id);
+            return View("EditForm", employee);
         }
 
         [Route("edit")]
         [HttpPost]
-        public ActionResult UpdateEmployee(Employee edittedEmployee) {
+        public ActionResult UpdateEmployee(Employee edittedEmployee)
+        {
             List<Employee> employees = (List<Employee>)TempData.Peek("employees");
             int index = employees.FindIndex(e => e.EmployeeId == edittedEmployee.EmployeeId);
             employees[index] = edittedEmployee;
@@ -68,7 +74,8 @@ namespace WebMVC.Controllers
 
         [Route("{id}/delete")]
         [HttpPost]
-        public ActionResult DeleteEmployee(int id) {
+        public ActionResult DeleteEmployee(int id)
+        {
             List<Employee> employees = (List<Employee>)TempData.Peek("employees");
             Employee employee = employees.Find(e => e.EmployeeId == id);
             employees.Remove(employee);
