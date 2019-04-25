@@ -10,9 +10,11 @@
         @using(Html.BeginForm("NewEmployee", "Index", FormMethod.Post))
          {
             @Html.EditorFor(m => m.EmployeeId)
+            @Html.ValidationMessageFor(m => m.EmployeeId)
             @Html.EditorFor(m => m.FirstName)
+            @Html.ValidationMessageFor(m => m.FirstName)
             @Html.EditorFor(m => m.LastName)
-            @Html.Editor("EmployeeId")
+            @Html.ValidationMessageFor(m => m.LastName)
             <input type="submit" value="Tambah" />
          }
     </div>

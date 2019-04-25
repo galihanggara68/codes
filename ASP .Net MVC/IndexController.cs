@@ -14,17 +14,16 @@ namespace WebMVC.Controllers
         [HttpGet]
         public ActionResult ListEmployee()
         {
-            if(TempData.Peek("employees") == null)
-            {
-                List<Employee> employees = new List<Employee> {
-                    new Employee{ EmployeeId = 100, FirstName = "Udin", LastName = "Jalaludin" },
-                    new Employee{ EmployeeId = 101, FirstName = "Ice", LastName = "Juice" },
-                    new Employee{ EmployeeId = 102, FirstName = "Ucup", LastName = "Aja" }
-                };
-
-                TempData["employees"] = employees;
+            using (HREntities hr = new HREntities()) {
+                List<Employee> employees = hr.COPY_EMP.Select(e =>
+                        new Employee
+                        {
+                            EmployeeId = (int)e.EMPLOYEE_ID,
+                            FirstName = e.FIRST_NAME,
+                            LastName = e.LAST_NAME
+                        }).ToList();
+                return View("Index", employees);
             }
-            return View("Index", TempData.Peek("employees"));
         }
 
         [Route("")]
@@ -32,9 +31,17 @@ namespace WebMVC.Controllers
         [ActionName("NewEmployee")]
         public ActionResult AddEmployee(Employee employee)
         {
-            List<Employee> employees = (List<Employee>)TempData.Peek("employees");
-            employees.Add(employee);
-            return Redirect("~/employees");
+            using (HREntities hr = new HREntities()) {
+                COPY_EMP addedEmp = new COPY_EMP
+                {
+                    EMPLOYEE_ID = employee.EmployeeId,
+                    FIRST_NAME = employee.FirstName,
+                    LAST_NAME = employee.LastName
+                };
+                hr.COPY_EMP.Add(addedEmp);
+                hr.SaveChanges();
+                return Redirect("~/employees");
+            }
         }
 
         [Route("new")]
@@ -48,38 +55,68 @@ namespace WebMVC.Controllers
         [HttpGet]
         public ActionResult GetEmployee(int id)
         {
-            List<Employee> employees = (List<Employee>)TempData.Peek("employees");
-            Employee employee = employees.Find(e => e.EmployeeId == id);
-            return View("Employee", employee);
+            using(HREntities hr = new HREntities())
+            {
+                // Cara Kedua
+                COPY_EMP empModel = hr.COPY_EMP.Find(id);
+                Employee employee = new Employee {
+                    EmployeeId = (int)empModel.EMPLOYEE_ID,
+                    FirstName = empModel.FIRST_NAME,
+                    LastName = empModel.LAST_NAME,
+                };
+
+                return View("COPY_EMP", employee);
+            }
         }
 
         [Route("{id}/edit")]
         [HttpGet]
         public ActionResult EditEmployee(int id)
         {
-            List<Employee> employees = (List<Employee>)TempData.Peek("employees");
-            Employee employee = employees.Find(e => e.EmployeeId == id);
-            return View("EditForm", employee);
+            using (HREntities hr = new HREntities())
+            {
+                // Cara Kedua
+                COPY_EMP empModel = hr.COPY_EMP.Find(id);
+                Employee employee = new Employee
+                {
+                    EmployeeId = (int)empModel.EMPLOYEE_ID,
+                    FirstName = empModel.FIRST_NAME,
+                    LastName = empModel.LAST_NAME,
+                };
+
+                return View("EditForm", employee);
+            }
         }
 
         [Route("edit")]
         [HttpPost]
         public ActionResult UpdateEmployee(Employee edittedEmployee)
         {
-            List<Employee> employees = (List<Employee>)TempData.Peek("employees");
-            int index = employees.FindIndex(e => e.EmployeeId == edittedEmployee.EmployeeId);
-            employees[index] = edittedEmployee;
-            return Redirect("~/employees");
+            using (HREntities hr = new HREntities())
+            {
+                COPY_EMP addedEmp = new COPY_EMP
+                {
+                    EMPLOYEE_ID = edittedEmployee.EmployeeId,
+                    FIRST_NAME = edittedEmployee.FirstName,
+                    LAST_NAME = edittedEmployee.LastName
+                };
+                hr.Entry(addedEmp).State = System.Data.Entity.EntityState.Modified;
+                hr.SaveChanges();
+                return Redirect("~/employees");
+            }
         }
 
         [Route("{id}/delete")]
         [HttpPost]
         public ActionResult DeleteEmployee(int id)
         {
-            List<Employee> employees = (List<Employee>)TempData.Peek("employees");
-            Employee employee = employees.Find(e => e.EmployeeId == id);
-            employees.Remove(employee);
-            return Redirect("~/employees");
+            using (HREntities hr = new HREntities())
+            {
+                COPY_EMP employee = hr.COPY_EMP.Find(id);
+                hr.COPY_EMP.Remove(employee);
+                hr.SaveChanges();
+                return Redirect("~/employees");
+            }
         }
     }
 }
