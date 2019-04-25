@@ -1,41 +1,45 @@
-<!DOCTYPE html>
+@{ 
+    Layout = "~/Views/Layouts/MainLayout.cshtml";
+}
 @model List<WebMVC.Models.Employee>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <title>Index Page</title>
-</head>
-<body>
-    <table border="1">
-        <thead>
+<table border="1">
+    <thead>
+        <tr>
+            <th><a href="/employees/new">Tambah</a></th>
+        </tr>
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var employee in Model)
+        {
             <tr>
-                <th><a href="/employees/new">Tambah</a></th>
+                <td>@employee.EmployeeId</td>
+                <td>@employee.FirstName</td>
+                <td>@employee.LastName</td>
+                <td>
+                    <form action="/employees/@employee.EmployeeId/delete" method="post">
+                        <input type="submit" value="X" />
+                    </form>
+                    <a href="/employees/@employee.EmployeeId/edit">Edit</a>
+                </td>
             </tr>
-            <tr>
-                <th>ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach(var employee in Model)
-            {
-                <tr>
-                    <td>@employee.EmployeeId</td>
-                    <td>@employee.FirstName</td>
-                    <td>@employee.LastName</td>
-                    <td>
-                        <form action="/employees/@employee.EmployeeId/delete" method="post">
-                            <input type="submit" value="X" />
-                        </form>
-                        <a href="/employees/@employee.EmployeeId/edit">Edit</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</body>
-<script src="~/Scripts/bootstrap.min.js"></script>
-</html>
+        }
+    </tbody>
+</table>
+
+@section title{
+    Employee Lists    
+}
+
+@section header{
+    <h3>Employee Table</h3>    
+}
+
+@section footer{
+    <p align="center">&copy; Copyright 2019</p>    
+}

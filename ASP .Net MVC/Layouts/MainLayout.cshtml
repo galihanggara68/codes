@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <title>@RenderSection("title", true)</title>
+</head>
+<body>
+    @RenderSection("header", false)
+    <div>
+        @RenderBody()
+    </div>
+    @RenderSection("footer", true)
+</body>
+<script src="~/Scripts/bootstrap.min.js"></script>
+</html>
