@@ -40,20 +40,28 @@ function postData(){
 	let queryString = new URLSearchParams(location.search);
 	if(queryString.has("action")){
 		let id = queryString.get("id");
-		let employeeId = $("#employee_id").val();
-		let firstName = $("#first_name").val();
-		let lastName = $("#last_name").val();
-		let jsonData = {
-			"EMPLOYEE_ID": employeeId,
-			"FIRST_NAME": firstName,
-			"LAST_NAME": lastName
-		};
-		$.ajax({
-			"url": `http://localhost:58085/api/values/${id}`,
-			"type": "PUT",
-			"data": jsonData,
-			"success": postDataCallback
-		});
+		if(queryString.get("action") == "edit"){
+			let employeeId = $("#employee_id").val();
+			let firstName = $("#first_name").val();
+			let lastName = $("#last_name").val();
+			let jsonData = {
+				"EMPLOYEE_ID": employeeId,
+				"FIRST_NAME": firstName,
+				"LAST_NAME": lastName
+			};
+			$.ajax({
+				"url": `http://localhost:58085/api/values/`,
+				"type": "PUT",
+				"data": jsonData,
+				"success": postDataCallback
+			});
+		}else{
+			$.ajax({
+				"url": `http://localhost:58085/api/values/${id}`,
+				"type": "DELETE",
+				"success": postDataCallback
+			});
+		}
 	}else{
 		let employeeId = $("#employee_id").val();
 		let firstName = $("#first_name").val();
