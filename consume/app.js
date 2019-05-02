@@ -18,9 +18,18 @@ function showData(employees){
 }
 
 let queryString = new URLSearchParams(location.search);
-if(queryString.has("id")){
+if(!queryString.has("action") && queryString.has("id")){
 	let id = queryString.get("id");
 	$.get(`http://localhost:58085/api/values/${id}`, showEmployee);
+}else{
+	let id = queryString.get("id");
+	$.get(`http://localhost:58085/api/values/${id}`, editEmployee);
+}
+
+function editEmployee(employee){
+	$("#employee_id").val(employee.EMPLOYEE_ID);
+	$("#first_name").val(employee.FIRST_NAME);
+	$("#last_name").val(employee.LAST_NAME);
 }
 
 function showEmployee(employee){
@@ -28,16 +37,35 @@ function showEmployee(employee){
 }
 
 function postData(){
-	let employeeId = $("#employee_id").val();
-	let firstName = $("#first_name").val();
-	let lastName = $("#last_name").val();
-	let jsonData = {
-		"EMPLOYEE_ID": employeeId,
-		"FIRST_NAME": firstName,
-		"LAST_NAME": lastName
-	};
-	$.post("http://localhost:58085/api/values", 
-			jsonData, postDataCallback);
+	let queryString = new URLSearchParams(location.search);
+	if(queryString.has("action")){
+		let id = queryString.get("id");
+		let employeeId = $("#employee_id").val();
+		let firstName = $("#first_name").val();
+		let lastName = $("#last_name").val();
+		let jsonData = {
+			"EMPLOYEE_ID": employeeId,
+			"FIRST_NAME": firstName,
+			"LAST_NAME": lastName
+		};
+		$.ajax({
+			"url": `http://localhost:58085/api/values/${id}`,
+			"type": "PUT",
+			"data": jsonData,
+			"success": postDataCallback
+		});
+	}else{
+		let employeeId = $("#employee_id").val();
+		let firstName = $("#first_name").val();
+		let lastName = $("#last_name").val();
+		let jsonData = {
+			"EMPLOYEE_ID": employeeId,
+			"FIRST_NAME": firstName,
+			"LAST_NAME": lastName
+		};
+		$.post("http://localhost:58085/api/values", 
+				jsonData, postDataCallback);
+	}
 }
 
 function postDataCallback(message){
